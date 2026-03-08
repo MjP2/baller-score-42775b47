@@ -6,9 +6,10 @@ import Navbar from "@/components/landing/Navbar";
 function detectLanguage(): LangCode {
   const params = new URLSearchParams(window.location.search);
   const langParam = params.get("lang");
-  if (langParam === "es" || langParam === "sv") return langParam;
+  const validLangs = ["es", "sv", "fi", "de"] as const;
+  if (validLangs.includes(langParam as any)) return langParam as LangCode;
   const browserLang = navigator.language?.slice(0, 2);
-  if (browserLang === "es" || browserLang === "sv") return browserLang;
+  if (validLangs.includes(browserLang as any)) return browserLang as LangCode;
   return "en";
 }
 
