@@ -1,6 +1,6 @@
 import { CmsSection, loadSections, saveSections, generateId } from "@/lib/cms";
 
-const SEED_KEY = "baller-cms-seeded";
+const SEED_KEY = "baller-cms-seeded-v2";
 
 export function seedIfEmpty() {
   if (localStorage.getItem(SEED_KEY)) return;
