@@ -320,6 +320,9 @@ function SectionDataEditor({ section, onUpdate }: { section: CmsSection; onUpdat
               {field(`card${i}Title`, "Title")}{field(`card${i}Body`, "Body")}
             </div>
           ))}
+          <div className="border-t border-border pt-3 mt-3">
+            {toggle("mobileCarousel", "Carousel on mobile")}
+          </div>
         </>
       );
     case "stats":
