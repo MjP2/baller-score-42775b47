@@ -4,8 +4,6 @@ const SEED_KEY = "baller-cms-seeded";
 
 export function seedIfEmpty() {
   if (localStorage.getItem(SEED_KEY)) return;
-  const existing = loadSections();
-  if (existing.length > 0) return;
 
   const sections: CmsSection[] = [
     {
