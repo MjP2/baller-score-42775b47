@@ -118,12 +118,13 @@ export default function Admin() {
 
   if (previewMode) {
     return (
-      <div className="min-h-screen bg-background text-foreground">
-        <div className="fixed top-4 right-4 z-50">
+      <div className="min-h-screen bg-background text-foreground overflow-x-hidden">
+        <div className="fixed top-4 right-4 z-[60]">
           <Button onClick={() => setPreviewMode(false)} variant="outline" className="gap-2">
             <EyeOff size={16} /> Exit Preview
           </Button>
         </div>
+        <Navbar sections={sections} />
         {sections.map(s => <SectionRenderer key={s.id} section={s} />)}
       </div>
     );
