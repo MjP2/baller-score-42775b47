@@ -3,6 +3,7 @@ import { motion, useScroll, useTransform } from "framer-motion";
 import { t } from "@/lib/i18n";
 import { Apple } from "lucide-react";
 import heroBg from "@/assets/hero-bg.jpg";
+import heroVideo from "@/assets/hero-video.mp4";
 
 const HeroSection = () => {
   const ref = useRef<HTMLDivElement>(null);
@@ -17,11 +18,16 @@ const HeroSection = () => {
     <section ref={ref} className="relative min-h-screen flex items-center overflow-hidden">
       {/* Parallax background */}
       <motion.div className="absolute inset-0 z-0" style={{ y }}>
-        <img
-          src={heroBg}
-          alt="Padel player in action"
+        <video
+          autoPlay
+          loop
+          muted
+          playsInline
+          poster={heroBg}
           className="w-full h-[120%] object-cover object-center"
-        />
+        >
+          <source src={heroVideo} type="video/mp4" />
+        </video>
         <div className="absolute inset-0 bg-gradient-to-r from-background via-background/80 to-background/30" />
         <div className="absolute inset-0 bg-gradient-to-t from-background via-transparent to-transparent" />
       </motion.div>
