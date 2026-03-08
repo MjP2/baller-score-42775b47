@@ -314,18 +314,12 @@ function SectionDataEditor({ section, onUpdate }: { section: CmsSection; onUpdat
       return (
         <>
           {field("title", "Section Title")}{field("subtitle", "Section Subtitle")}
-          <div className="border-t border-border pt-3 mt-3 space-y-3">
-            <p className="text-xs font-semibold text-muted-foreground uppercase">Card 1</p>
-            {field("card1Title", "Title")}{field("card1Body", "Body")}
-          </div>
-          <div className="border-t border-border pt-3 mt-3 space-y-3">
-            <p className="text-xs font-semibold text-muted-foreground uppercase">Card 2</p>
-            {field("card2Title", "Title")}{field("card2Body", "Body")}
-          </div>
-          <div className="border-t border-border pt-3 mt-3 space-y-3">
-            <p className="text-xs font-semibold text-muted-foreground uppercase">Card 3</p>
-            {field("card3Title", "Title")}{field("card3Body", "Body")}
-          </div>
+          {[1, 2, 3, 4].map(i => (
+            <div key={i} className="border-t border-border pt-3 mt-3 space-y-3">
+              <p className="text-xs font-semibold text-muted-foreground uppercase">Card {i} {i === 4 ? "(optional)" : ""}</p>
+              {field(`card${i}Title`, "Title")}{field(`card${i}Body`, "Body")}
+            </div>
+          ))}
         </>
       );
     case "stats":

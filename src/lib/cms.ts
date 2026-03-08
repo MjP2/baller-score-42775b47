@@ -55,7 +55,7 @@ export const SECTION_LABELS: Record<SectionType, string> = {
   hero: "Hero Section",
   "feature-block-side": "Feature Block (Side-by-Side)",
   "feature-block-stacked": "Feature Block (Stacked)",
-  "feature-grid": "Feature Grid (3 Cards)",
+  "feature-grid": "Feature Grid (3-4 Cards)",
   stats: "Stats Bar",
   platform: "Platform Section",
   testimonials: "Testimonials Carousel",
@@ -76,6 +76,7 @@ export function defaultDataForType(type: SectionType): Record<string, any> {
         card1Title: "", card1Body: "",
         card2Title: "", card2Body: "",
         card3Title: "", card3Body: "",
+        card4Title: "", card4Body: "",
       };
     case "stats":
       return {
