@@ -71,6 +71,25 @@ const Index = () => {
       {sections.map((section) => (
         <SectionRenderer key={section.id} section={section} />
       ))}
+
+      {/* Footer */}
+      <footer className="border-t border-border py-6">
+        <div className="container mx-auto px-6 flex items-center justify-between text-sm text-muted-foreground">
+          <p>
+            Created by:{" "}
+            <a href="https://nexttime.design" target="_blank" rel="noopener noreferrer" className="hover:text-foreground transition-colors underline underline-offset-2">
+              Next Time Design
+            </a>
+          </p>
+          <a href="https://www.instagram.com/ballerscore.app" target="_blank" rel="noopener noreferrer" className="hover:text-foreground transition-colors" aria-label="Instagram">
+            <svg viewBox="0 0 24 24" className="w-5 h-5" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+              <rect x="2" y="2" width="20" height="20" rx="5" />
+              <circle cx="12" cy="12" r="5" />
+              <circle cx="17.5" cy="6.5" r="1.5" fill="currentColor" stroke="none" />
+            </svg>
+          </a>
+        </div>
+      </footer>
     </div>
   );
 };
