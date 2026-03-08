@@ -50,6 +50,23 @@ export default function Admin() {
     setSections(prev => prev.map(s => s.id === id ? { ...s, data: { ...s.data, [field]: value } } : s));
   };
 
+  const duplicateSection = (id: string) => {
+    setSections(prev => {
+      const idx = prev.findIndex(s => s.id === id);
+      if (idx === -1) return prev;
+      const original = prev[idx];
+      const copy: CmsSection = {
+        ...original,
+        id: generateId(),
+        data: { ...original.data },
+      };
+      const next = [...prev];
+      next.splice(idx + 1, 0, copy);
+      return next.map((s, i) => ({ ...s, order: i }));
+    });
+    toast.success("Section duplicated");
+  };
+
   const removeSection = (id: string) => {
     setSections(prev => prev.filter(s => s.id !== id));
     toast.info("Section removed");
@@ -203,6 +220,9 @@ export default function Admin() {
                   </Button>
                   <Button variant="ghost" size="icon" className="h-8 w-8" onClick={() => moveSection(section.id, 1)}>
                     <ChevronDown size={14} />
+                  </Button>
+                  <Button variant="ghost" size="icon" className="h-8 w-8" onClick={() => duplicateSection(section.id)}>
+                    <Copy size={14} />
                   </Button>
                   <Button variant="ghost" size="icon" className="h-8 w-8 text-destructive hover:text-destructive" onClick={() => removeSection(section.id)}>
                     <Trash2 size={14} />
