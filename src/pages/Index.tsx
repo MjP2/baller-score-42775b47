@@ -1,6 +1,8 @@
 import Navbar from "@/components/landing/Navbar";
 import HeroSection from "@/components/landing/HeroSection";
+import FeatureGrid from "@/components/landing/FeatureGrid";
 import FeatureBlock from "@/components/landing/FeatureBlock";
+import StatsSection from "@/components/landing/StatsSection";
 import PlatformSection from "@/components/landing/PlatformSection";
 import TestimonialsSection from "@/components/landing/TestimonialsSection";
 import CtaFooter from "@/components/landing/CtaFooter";
@@ -17,6 +19,7 @@ const Index = () => {
       <HeroSection />
 
       <div id="features">
+        <FeatureGrid />
         <FeatureBlock
           title={t("features.scoring.title")}
           body={t("features.scoring.body")}
@@ -28,22 +31,32 @@ const Index = () => {
       <div id="dashboard">
         <FeatureBlock
           title={t("features.dashboard.title")}
+          subtitle={t("features.dashboard.subtitle")}
           body={t("features.dashboard.body")}
+          bullets={[
+            t("features.dashboard.bullet1"),
+            t("features.dashboard.bullet2"),
+            t("features.dashboard.bullet3"),
+            t("features.dashboard.bullet4"),
+          ]}
           image={featureDashboard}
           imageAlt="Live dashboard on tablet"
           reversed
+          badge="Live Feature"
         />
       </div>
 
       <div id="stats">
         <FeatureBlock
           title={t("features.stats.title")}
+          subtitle={t("features.stats.subtitle")}
           body={t("features.stats.body")}
           image={featureStats}
           imageAlt="Post-match statistics on phone"
         />
       </div>
 
+      <StatsSection />
       <PlatformSection />
       <TestimonialsSection />
       <CtaFooter />
