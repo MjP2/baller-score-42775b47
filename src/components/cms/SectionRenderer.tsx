@@ -23,7 +23,6 @@ function SectionContent({ section }: { section: CmsSection }) {
   switch (section.type) {
     case "hero":
       return <HeroRenderer data={d} />;
-      );
 
     case "feature-block-side":
       return (
