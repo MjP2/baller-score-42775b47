@@ -1,4 +1,5 @@
 import { useState, useEffect, useRef } from "react";
+import Navbar from "@/components/landing/Navbar";
 import { CmsSection, SectionType, SECTION_LABELS, loadSections, saveSections, generateId, defaultDataForType, SUPPORTED_LANGUAGES, LangCode, exportSectionsJson, importSectionsJson } from "@/lib/cms";
 import SectionRenderer from "@/components/cms/SectionRenderer";
 import { Button } from "@/components/ui/button";
