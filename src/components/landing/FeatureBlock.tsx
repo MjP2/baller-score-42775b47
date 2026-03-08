@@ -30,7 +30,7 @@ const FeatureBlock = ({ id, title, subtitle, body, bullets, image, imageAlt, rev
 
   if (layout === "stacked") {
     return (
-      <section id={id} className="py-20 lg:py-32">
+      <section id={id} className="py-12 lg:py-20">
         <div className="container mx-auto px-6">
           {/* Text above */}
           <motion.div
@@ -94,7 +94,7 @@ const FeatureBlock = ({ id, title, subtitle, body, bullets, image, imageAlt, rev
   }
 
   return (
-    <section id={id} className="py-20 lg:py-32">
+    <section id={id} className="py-12 lg:py-20">
       <div className="container mx-auto px-6">
         <div
           className={`flex flex-col ${
