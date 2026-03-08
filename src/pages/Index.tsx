@@ -67,7 +67,7 @@ const Index = () => {
 
   return (
     <div className="min-h-screen bg-background text-foreground overflow-x-hidden">
-      <Navbar />
+      <Navbar sections={sections} />
       {sections.map((section) => (
         <SectionRenderer key={section.id} section={section} />
       ))}

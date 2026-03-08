@@ -7,7 +7,8 @@ import { Textarea } from "@/components/ui/textarea";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Switch } from "@/components/ui/switch";
 import { Label } from "@/components/ui/label";
-import { Trash2, GripVertical, ChevronUp, ChevronDown, Plus, Eye, EyeOff, Download, Upload, Copy, GitMerge } from "lucide-react";
+import { Trash2, GripVertical, ChevronUp, ChevronDown, Plus, Eye, EyeOff, Download, Upload, Copy, GitMerge, Navigation } from "lucide-react";
+import { Checkbox } from "@/components/ui/checkbox";
 import { toast } from "sonner";
 import GitHubPublish from "@/components/cms/GitHubPublish";
 
@@ -210,6 +211,40 @@ export default function Admin() {
               {/* Expanded editor */}
               {expandedId === section.id && (
                 <div className="border-t border-border px-4 py-4 space-y-4">
+                  {/* Nav settings */}
+                  <div className="bg-secondary/30 rounded-lg p-4 space-y-3">
+                    <div className="flex items-center gap-2 text-xs font-semibold uppercase tracking-wider text-muted-foreground">
+                      <Navigation size={14} /> Navigation Menu
+                    </div>
+                    <div className="flex items-center gap-3">
+                      <Checkbox
+                        id={`nav-${section.id}`}
+                        checked={!!section.data._navVisible}
+                        onCheckedChange={(v) => updateData(section.id, "_navVisible", !!v)}
+                      />
+                      <Label htmlFor={`nav-${section.id}`} className="text-sm">Show in navigation</Label>
+                    </div>
+                    {section.data._navVisible && (
+                      <div className="flex items-center gap-4 pl-7">
+                        <div className="space-y-1 flex-1">
+                          <Label className="text-xs text-muted-foreground">Menu label</Label>
+                          <Input
+                            value={section.data._navLabel || ""}
+                            onChange={(e) => updateData(section.id, "_navLabel", e.target.value)}
+                            placeholder="e.g. Features"
+                            className="h-8 text-sm"
+                          />
+                        </div>
+                        <div className="flex items-center gap-2 pt-5">
+                          <Switch
+                            checked={!!section.data._navCta}
+                            onCheckedChange={(v) => updateData(section.id, "_navCta", v)}
+                          />
+                          <Label className="text-xs text-muted-foreground whitespace-nowrap">Main CTA button</Label>
+                        </div>
+                      </div>
+                    )}
+                  </div>
                   <SectionDataEditor section={section} onUpdate={updateData} />
                 </div>
               )}

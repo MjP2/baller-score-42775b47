@@ -8,6 +8,14 @@ import { Apple, ChevronLeft, ChevronRight, Quote, Smartphone, Target, Volume2 } 
 const iconMap = [Smartphone, Target, Volume2];
 
 export default function SectionRenderer({ section }: { section: CmsSection }) {
+  return (
+    <div id={section.id}>
+      <SectionContent section={section} />
+    </div>
+  );
+}
+
+function SectionContent({ section }: { section: CmsSection }) {
   const d = section.data;
 
   switch (section.type) {
