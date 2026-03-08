@@ -164,12 +164,12 @@ function SectionContent({ section }: { section: CmsSection }) {
               <div className="flex flex-col sm:flex-row gap-4 justify-center items-center pt-4">
                 {d.appStoreUrl && (
                   <a href={d.appStoreUrl} target="_blank" rel="noopener noreferrer" className="hover:opacity-80 transition-opacity">
-                    <img src={`${import.meta.env.BASE_URL}assets/badge-appstore.svg`} alt="Download on the App Store" className="h-[52px] w-auto" />
+                    <img src={`${import.meta.env.BASE_URL}assets/badge-appstore.svg`} alt="Download on the App Store" className="h-[40px] w-auto" />
                   </a>
                 )}
                 {d.playStoreUrl && (
                   <a href={d.playStoreUrl} target="_blank" rel="noopener noreferrer" className="hover:opacity-80 transition-opacity">
-                    <img src={`${import.meta.env.BASE_URL}assets/badge-googleplay.png`} alt="Get it on Google Play" className="h-[52px] w-auto" />
+                    <img src={`${import.meta.env.BASE_URL}assets/badge-googleplay.png`} alt="Get it on Google Play" className="h-[60px] w-auto -my-[10px]" />
                   </a>
                 )}
               </div>
