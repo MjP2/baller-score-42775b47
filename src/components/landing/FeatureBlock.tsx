@@ -75,7 +75,7 @@ const FeatureBlock = ({ id, title, subtitle, body, bullets, image, imageAlt, rev
           {/* Large image below */}
           <motion.div
             initial={{ opacity: 0, y: 40 }}
-            whileInView={{ opacity: 1, y: 0 }}
+            whileInView={imageLoaded ? { opacity: 1, y: 0 } : { opacity: 0, y: 40 }}
             viewport={{ once: true, margin: "-100px" }}
             transition={{ duration: 0.7, delay: 0.15 }}
           >
@@ -84,7 +84,7 @@ const FeatureBlock = ({ id, title, subtitle, body, bullets, image, imageAlt, rev
                 src={image}
                 alt={imageAlt}
                 className="w-full h-auto object-cover"
-                loading="lazy"
+                loading="eager"
               />
             </div>
           </motion.div>
@@ -105,7 +105,7 @@ const FeatureBlock = ({ id, title, subtitle, body, bullets, image, imageAlt, rev
           <motion.div
             className="flex-1 w-full"
             initial={{ opacity: 0, x: reversed ? 60 : -60 }}
-            whileInView={{ opacity: 1, x: 0 }}
+            whileInView={imageLoaded ? { opacity: 1, x: 0 } : { opacity: 0 }}
             viewport={{ once: true, margin: "-100px" }}
             transition={{ duration: 0.7 }}
           >
@@ -114,7 +114,7 @@ const FeatureBlock = ({ id, title, subtitle, body, bullets, image, imageAlt, rev
                 src={image}
                 alt={imageAlt}
                 className="w-full h-auto object-cover"
-                loading="lazy"
+                loading="eager"
               />
             </div>
           </motion.div>
