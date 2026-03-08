@@ -9,6 +9,7 @@ import { Switch } from "@/components/ui/switch";
 import { Label } from "@/components/ui/label";
 import { Trash2, GripVertical, ChevronUp, ChevronDown, Plus, Eye, EyeOff } from "lucide-react";
 import { toast } from "sonner";
+import GitHubPublish from "@/components/cms/GitHubPublish";
 
 const sectionTypes = Object.keys(SECTION_LABELS) as SectionType[];
 
@@ -67,11 +68,14 @@ export default function Admin() {
   return (
     <div className="min-h-screen bg-background text-foreground">
       <div className="container mx-auto px-6 py-10 max-w-4xl">
-        <div className="flex items-center justify-between mb-8">
+        <div className="flex items-center justify-between mb-8 flex-wrap gap-4">
           <h1 className="text-3xl font-display font-bold text-gradient">Mini CMS</h1>
-          <Button onClick={() => setPreviewMode(true)} variant="outline" className="gap-2">
-            <Eye size={16} /> Preview
-          </Button>
+          <div className="flex items-center gap-3 flex-wrap">
+            <GitHubPublish sections={sections} />
+            <Button onClick={() => setPreviewMode(true)} variant="outline" className="gap-2">
+              <Eye size={16} /> Preview
+            </Button>
+          </div>
         </div>
 
         {/* Section list */}
