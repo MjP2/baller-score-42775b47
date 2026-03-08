@@ -1,0 +1,171 @@
+[
+  {
+    "id": "9eq64sne",
+    "type": "hero",
+    "order": 0,
+    "data": {
+      "title": "Focus on the Match, Not the Score.",
+      "subtitle": "The ultimate scoring app for Padel, Tennis, and Pickleball. Track every point on your phone or watch, analyze your stats, and share your victories.",
+      "bgImage": "https://test-videos.co.uk/vids/bigbuckbunny/mp4/h264/1080/Big_Buck_Bunny_1080_10s_1MB.mp4"
+    }
+  },
+  {
+    "id": "1iilvwtb",
+    "type": "feature-grid",
+    "order": 1,
+    "data": {
+      "title": "Everything You Need to Win",
+      "subtitle": "Powerful features designed for competitive players",
+      "card1Title": "Multi-Platform Sync",
+      "card1Body": "Seamlessly sync your matches across iPhone, Apple Watch, Android phones, and Wear OS watches.",
+      "card2Title": "Smart Score Tracking",
+      "card2Body": "Intuitive tap-to-score interface designed for mid-game use. Track points, games, and sets with a glance.",
+      "card3Title": "Voice Announcements",
+      "card3Body": "Let the app call the score so you never lose focus on the ball. Customizable voice settings for any environment."
+    }
+  },
+  {
+    "id": "7wtg1d1i",
+    "type": "feature-block-side",
+    "order": 2,
+    "data": {
+      "title": "Score Like a Pro, On Any Device",
+      "subtitle": "",
+      "body": "Whether you prefer our revolutionary player-drag 'Baller Mode' on your phone or simple taps on your watch, scoring has never been faster. Spend less time on your device and more time in the game.",
+      "image": "/assets/feature-scoring.jpg",
+      "imageAlt": "Baller Score on iPhone and Apple Watch",
+      "reversed": false,
+      "badge": "",
+      "bullets": ""
+    }
+  },
+  {
+    "id": "udi2dr0z",
+    "type": "feature-block-side",
+    "order": 3,
+    "data": {
+      "title": "Real-Time Live Dashboard",
+      "subtitle": "Share the action as it happens",
+      "body": "Generate a unique QR code or shareable link for any match. Friends, family, and fans can watch your score update live from anywhere in the world — no app required for viewers.",
+      "image": "/assets/feature-dashboard.jpg",
+      "imageAlt": "Live dashboard on tablet",
+      "reversed": true,
+      "badge": "Live Feature",
+      "bullets": "Live score updates\nMatch statistics\nShareable links\nNo app needed for viewers"
+    }
+  },
+  {
+    "id": "qxfjgyg2",
+    "type": "feature-block-side",
+    "order": 4,
+    "data": {
+      "title": "Deep Analytics",
+      "subtitle": "Know your game inside and out",
+      "body": "Track your performance over time with comprehensive statistics. Win/loss ratios, point distributions, and trends help you identify strengths and areas for improvement.",
+      "image": "/assets/feature-stats.jpg",
+      "imageAlt": "Post-match statistics on phone",
+      "reversed": false,
+      "badge": "",
+      "bullets": ""
+    }
+  },
+  {
+    "id": "bsehodv9",
+    "type": "stats",
+    "order": 5,
+    "data": {
+      "stat1Value": "10,000+",
+      "stat1Label": "Matches Tracked",
+      "stat2Value": "5,000+",
+      "stat2Label": "Active Players",
+      "stat3Value": "45+",
+      "stat3Label": "Countries",
+      "stat4Value": "4.9★",
+      "stat4Label": "App Rating"
+    }
+  },
+  {
+    "id": "y481ndhi",
+    "type": "platform",
+    "order": 6,
+    "data": {
+      "title": "Play Everywhere.",
+      "subtitle": "Available on iOS, Android, watchOS, and Wear OS.",
+      "image": "/assets/platform-devices.jpg"
+    }
+  },
+  {
+    "id": "o8pmvlsk",
+    "type": "testimonials",
+    "order": 7,
+    "data": {
+      "title": "What Players Say",
+      "subtitle": "Join thousands of happy players",
+      "t1Quote": "Baller Score has completely changed how I track my matches. The watch app is incredibly convenient during intense rallies.",
+      "t1Author": "Maria G.",
+      "t1Desc": "Competitive Player",
+      "t2Quote": "The live dashboard feature is a game-changer. My family can follow my tournament matches in real-time from another country!",
+      "t2Author": "Carlos R.",
+      "t2Desc": "Club Champion",
+      "t3Quote": "Finally, an app that understands racket sport scoring. The stats help me analyze my game and improve week over week.",
+      "t3Author": "Sofia L.",
+      "t3Desc": "Weekend Warrior"
+    }
+  },
+  {
+    "id": "59chn8xp",
+    "type": "cta",
+    "order": 8,
+    "data": {
+      "title": "Ready to Elevate Your Game?",
+      "subtitle": "Download Baller Score now and never lose track of a point again.",
+      "appStoreUrl": "#",
+      "playStoreUrl": "#"
+    }
+  },
+  {
+    "id": "znpgzqv1",
+    "type": "feature-block-side",
+    "order": 9,
+    "data": {
+      "title": "",
+      "subtitle": "",
+      "body": "",
+      "image": "",
+      "imageAlt": "",
+      "reversed": false,
+      "badge": "",
+      "bullets": ""
+    }
+  },
+  {
+    "id": "2p7ipt31",
+    "type": "stats",
+    "order": 10,
+    "data": {
+      "stat1Value": "",
+      "stat1Label": "",
+      "stat2Value": "",
+      "stat2Label": "",
+      "stat3Value": "",
+      "stat3Label": "",
+      "stat4Value": "",
+      "stat4Label": ""
+    }
+  },
+  {
+    "id": "d7k20i52",
+    "type": "stats",
+    "order": 11,
+    "data": {
+      "stat1Value": "",
+      "stat1Label": "",
+      "stat2Value": "",
+      "stat2Label": "",
+      "stat3Value": "",
+      "stat3Label": "",
+      "stat4Value": "",
+      "stat4Label": ""
+    }
+  }
+]
