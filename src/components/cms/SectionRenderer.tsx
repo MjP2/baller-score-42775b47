@@ -1,8 +1,8 @@
 import { CmsSection } from "@/lib/cms";
 import { assetUrl } from "@/lib/asset-url";
 import FeatureBlock from "@/components/landing/FeatureBlock";
-import { motion, AnimatePresence } from "framer-motion";
-import { useState } from "react";
+import { motion, AnimatePresence, useScroll, useTransform } from "framer-motion";
+import { useRef, useState } from "react";
 import { Apple, ChevronLeft, ChevronRight, Quote, Smartphone, Target, Volume2, Zap } from "lucide-react";
 import useEmblaCarousel from "embla-carousel-react";
 import { useIsMobile } from "@/hooks/use-mobile";
@@ -127,6 +127,43 @@ function SectionContent({ section }: { section: CmsSection }) {
     default:
       return null;
   }
+}
+
+function HeroRenderer({ data: d }: { data: Record<string, any> }) {
+  const ref = useRef<HTMLElement>(null);
+  const { scrollYProgress } = useScroll({ target: ref, offset: ["start start", "end start"] });
+  const bgY = useTransform(scrollYProgress, [0, 1], ["0%", "30%"]);
+  const textY = useTransform(scrollYProgress, [0, 1], ["0%", "15%"]);
+
+  return (
+    <section ref={ref} className="relative min-h-[60vh] flex items-center overflow-hidden">
+      {(d.bgImage || d.videoUrl) && (
+        <motion.div className="absolute inset-0 z-0" style={{ y: bgY }}>
+          {d.videoUrl ? (
+            <video
+              autoPlay loop muted playsInline
+              poster={d.bgImage ? assetUrl(d.bgImage) : undefined}
+              className="w-full h-full object-cover"
+            >
+              <source src={d.videoUrl} type="video/mp4" />
+            </video>
+          ) : (
+            <img src={assetUrl(d.bgImage)} alt="" className="w-full h-full object-cover" />
+          )}
+          <div className="absolute inset-0 bg-gradient-to-r from-background via-background/80 to-background/30" />
+          <div className="absolute inset-0 bg-gradient-to-t from-background via-transparent to-transparent" />
+        </motion.div>
+      )}
+      <motion.div className="relative z-10 container mx-auto px-6 py-24" style={{ y: textY }}>
+        <div className="max-w-2xl space-y-6">
+          <h1 className="text-4xl sm:text-5xl lg:text-7xl font-display font-bold leading-tight">
+            <span className="text-gradient">{d.title}</span>
+          </h1>
+          {d.subtitle && <p className="text-lg sm:text-xl text-muted-foreground max-w-lg leading-relaxed">{d.subtitle}</p>}
+        </div>
+      </motion.div>
+    </section>
+  );
 }
 
 function FeatureGridCard({ card, i }: { card: { icon: any; title: string; body: string }; i: number }) {
