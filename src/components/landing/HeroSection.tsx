@@ -3,6 +3,7 @@ import { motion, useScroll, useTransform } from "framer-motion";
 import { t } from "@/lib/i18n";
 import { Apple } from "lucide-react";
 import heroBg from "@/assets/hero-bg.jpg";
+import heroVideo from "@/assets/hero-video.mp4";
 
 const HeroSection = () => {
   const ref = useRef<HTMLDivElement>(null);
