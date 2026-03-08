@@ -107,7 +107,7 @@ function SectionContent({ section }: { section: CmsSection }) {
 
     case "platform":
       return (
-        <section className="py-20 lg:py-32">
+        <section className="py-16 lg:py-24">
           <div className="container mx-auto px-6 text-center space-y-12">
             <div className="space-y-4">
               <h2 className="text-4xl sm:text-5xl lg:text-6xl font-display font-bold text-gradient">{d.title}</h2>
