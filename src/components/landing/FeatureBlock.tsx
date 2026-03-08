@@ -18,8 +18,8 @@ const FeatureBlock = ({ id, title, subtitle, body, bullets, image, imageAlt, rev
       <div className="container mx-auto px-6">
         <div
           className={`flex flex-col ${
-            reversed ? "lg:flex-row-reverse" : "lg:flex-row"
-          } items-center gap-12 lg:gap-20`}
+            reversed ? "md:flex-row-reverse" : "md:flex-row"
+          } items-center gap-12 md:gap-16 lg:gap-20`}
         >
           {/* Image */}
           <motion.div
