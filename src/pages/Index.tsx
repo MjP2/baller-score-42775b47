@@ -9,7 +9,7 @@ const Index = () => {
 
   useEffect(() => {
     // Try fetching published cms-data.json first, fall back to localStorage
-    fetch("/cms-data.json")
+    fetch(`${import.meta.env.BASE_URL}cms-data.json`)
       .then(res => {
         if (!res.ok) throw new Error("Not found");
         return res.json();
