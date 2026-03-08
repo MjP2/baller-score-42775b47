@@ -161,14 +161,17 @@ function SectionContent({ section }: { section: CmsSection }) {
             <div className="max-w-3xl mx-auto text-center space-y-8">
               <h2 className="text-4xl sm:text-5xl lg:text-6xl font-display font-bold text-gradient">{d.title}</h2>
               {d.subtitle && <p className="text-lg text-muted-foreground">{d.subtitle}</p>}
-              <div className="flex flex-col sm:flex-row gap-4 justify-center pt-4">
-                <a href={d.appStoreUrl || "#"} className="inline-flex items-center gap-3 bg-foreground text-background px-6 py-3.5 rounded-xl font-semibold hover:opacity-90 transition-opacity">
-                  <Apple size={22} />
-                  <div className="text-left">
-                    <div className="text-[10px] opacity-70 leading-none">Download on the</div>
-                    <div className="text-sm leading-tight">App Store</div>
-                  </div>
-                </a>
+              <div className="flex flex-col sm:flex-row gap-4 justify-center items-center pt-4">
+                {d.appStoreUrl && (
+                  <a href={d.appStoreUrl} target="_blank" rel="noopener noreferrer" className="hover:opacity-80 transition-opacity">
+                    <img src={`${import.meta.env.BASE_URL}assets/badge-appstore.svg`} alt="Download on the App Store" className="h-[52px] w-auto" />
+                  </a>
+                )}
+                {d.playStoreUrl && (
+                  <a href={d.playStoreUrl} target="_blank" rel="noopener noreferrer" className="hover:opacity-80 transition-opacity">
+                    <img src={`${import.meta.env.BASE_URL}assets/badge-googleplay.png`} alt="Get it on Google Play" className="h-[52px] w-auto" />
+                  </a>
+                )}
               </div>
             </div>
           </div>
