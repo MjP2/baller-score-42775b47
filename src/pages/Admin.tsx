@@ -411,6 +411,24 @@ function SectionDataEditor({ section, onUpdate }: { section: CmsSection; onUpdat
       );
     case "cta":
       return <>{field("title", "Title")}{field("subtitle", "Subtitle")}{field("appStoreUrl", "App Store URL")}{field("playStoreUrl", "Google Play URL")}</>;
+    case "screenshots":
+      return (
+        <>
+          {field("title", "Section Title")}{field("subtitle", "Section Subtitle")}
+          {field("images", "Image URLs (one per line)", true)}
+          <div className="space-y-1.5">
+            <Label className="text-xs text-muted-foreground">Grid columns</Label>
+            <Select value={String(d.columns || 3)} onValueChange={v => onUpdate(section.id, "columns", Number(v))}>
+              <SelectTrigger className="w-32"><SelectValue /></SelectTrigger>
+              <SelectContent>
+                <SelectItem value="2">2</SelectItem>
+                <SelectItem value="3">3</SelectItem>
+                <SelectItem value="4">4</SelectItem>
+              </SelectContent>
+            </Select>
+          </div>
+        </>
+      );
     default:
       return <p className="text-muted-foreground">No fields for this type.</p>;
   }

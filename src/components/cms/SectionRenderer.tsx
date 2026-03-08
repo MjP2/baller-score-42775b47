@@ -3,8 +3,8 @@ import { assetUrl } from "@/lib/asset-url";
 import FeatureBlock from "@/components/landing/FeatureBlock";
 import StoreBadges from "@/components/landing/StoreBadges";
 import { motion, AnimatePresence, useScroll, useTransform } from "framer-motion";
-import { useRef, useState } from "react";
-import { Apple, ChevronLeft, ChevronRight, Quote, Smartphone, Target, Volume2, Zap } from "lucide-react";
+import { useRef, useState, useEffect, useCallback } from "react";
+import { Apple, ChevronLeft, ChevronRight, Quote, Smartphone, Target, Volume2, X, Zap } from "lucide-react";
 import useEmblaCarousel from "embla-carousel-react";
 import { useIsMobile } from "@/hooks/use-mobile";
 
@@ -126,6 +126,8 @@ function SectionContent({ section }: { section: CmsSection }) {
     case "testimonials":
       return <TestimonialsRenderer data={d} />;
 
+    case "screenshots":
+      return <ScreenshotsRenderer data={d} />;
     case "cta":
       return (
         <section className="py-16 lg:py-24">
@@ -290,5 +292,117 @@ function TestimonialsRenderer({ data: d }: { data: Record<string, any> }) {
         </div>
       </div>
     </section>
+  );
+}
+
+function ScreenshotsRenderer({ data: d }: { data: Record<string, any> }) {
+  const images = (d.images || "").split("\n").filter(Boolean).map((url: string) => assetUrl(url.trim()));
+  const cols = d.columns || 3;
+  const [lightboxOpen, setLightboxOpen] = useState(false);
+  const [lightboxIndex, setLightboxIndex] = useState(0);
+  const [emblaRef, emblaApi] = useEmblaCarousel({ startIndex: 0 });
+
+  const openLightbox = (i: number) => {
+    setLightboxIndex(i);
+    setLightboxOpen(true);
+  };
+
+  useEffect(() => {
+    if (lightboxOpen && emblaApi) {
+      emblaApi.scrollTo(lightboxIndex, true);
+    }
+  }, [lightboxOpen, emblaApi, lightboxIndex]);
+
+  const scrollPrev = useCallback(() => emblaApi?.scrollPrev(), [emblaApi]);
+  const scrollNext = useCallback(() => emblaApi?.scrollNext(), [emblaApi]);
+
+  useEffect(() => {
+    if (!lightboxOpen) return;
+    const handler = (e: KeyboardEvent) => {
+      if (e.key === "ArrowLeft") scrollPrev();
+      else if (e.key === "ArrowRight") scrollNext();
+      else if (e.key === "Escape") setLightboxOpen(false);
+    };
+    window.addEventListener("keydown", handler);
+    return () => window.removeEventListener("keydown", handler);
+  }, [lightboxOpen, scrollPrev, scrollNext]);
+
+  if (!images.length) return null;
+
+  const gridCols = cols === 2 ? "grid-cols-2" : cols === 4 ? "grid-cols-2 md:grid-cols-4" : "grid-cols-2 md:grid-cols-3";
+
+  return (
+    <>
+      <section className="py-20 lg:py-32">
+        <div className="container mx-auto px-6">
+          {d.title && (
+            <div className="text-center mb-16 space-y-4">
+              <h2 className="text-3xl sm:text-4xl lg:text-5xl font-display font-bold text-gradient">{d.title}</h2>
+              {d.subtitle && <p className="text-lg text-muted-foreground">{d.subtitle}</p>}
+            </div>
+          )}
+          <div className={`grid ${gridCols} gap-4 max-w-5xl mx-auto`}>
+            {images.map((src: string, i: number) => (
+              <button
+                key={i}
+                onClick={() => openLightbox(i)}
+                className="overflow-hidden rounded-xl border border-border hover:border-primary/30 transition-colors focus:outline-none focus:ring-2 focus:ring-primary/50"
+              >
+                <img src={src} alt={`Screenshot ${i + 1}`} className="w-full h-auto object-cover" loading="lazy" />
+              </button>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Lightbox */}
+      <AnimatePresence>
+        {lightboxOpen && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            className="fixed inset-0 z-[100] bg-background/95 flex items-center justify-center"
+            onClick={() => setLightboxOpen(false)}
+          >
+            <button
+              onClick={() => setLightboxOpen(false)}
+              className="absolute top-4 right-4 z-10 p-2 rounded-full border border-border bg-card hover:bg-secondary transition-colors"
+            >
+              <X size={20} />
+            </button>
+
+            {/* Prev / Next buttons */}
+            <button
+              onClick={(e) => { e.stopPropagation(); scrollPrev(); }}
+              className="absolute left-4 z-10 p-2 rounded-full border border-border bg-card hover:bg-secondary transition-colors"
+            >
+              <ChevronLeft size={24} />
+            </button>
+            <button
+              onClick={(e) => { e.stopPropagation(); scrollNext(); }}
+              className="absolute right-4 z-10 p-2 rounded-full border border-border bg-card hover:bg-secondary transition-colors"
+            >
+              <ChevronRight size={24} />
+            </button>
+
+            <div
+              className="w-full max-w-4xl mx-auto px-16"
+              onClick={(e) => e.stopPropagation()}
+            >
+              <div className="overflow-hidden" ref={emblaRef}>
+                <div className="flex">
+                  {images.map((src: string, i: number) => (
+                    <div key={i} className="flex-[0_0_100%] min-w-0 flex items-center justify-center">
+                      <img src={src} alt={`Screenshot ${i + 1}`} className="max-h-[85vh] w-auto max-w-full rounded-xl" />
+                    </div>
+                  ))}
+                </div>
+              </div>
+            </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
+    </>
   );
 }
