@@ -9,6 +9,20 @@ import { useIsMobile } from "@/hooks/use-mobile";
 
 const iconMap = [Smartphone, Target, Volume2, Zap];
 
+function SectionCta({ data }: { data: Record<string, any> }) {
+  if (!data._ctaEnabled || !data._ctaText) return null;
+  return (
+    <div className="flex justify-center pt-8">
+      <a
+        href={data._ctaUrl || "#"}
+        className="inline-flex items-center gap-2 px-6 py-3 rounded-xl border border-foreground/30 text-foreground font-semibold text-sm hover:bg-foreground/5 transition-colors"
+      >
+        {data._ctaText}
+      </a>
+    </div>
+  );
+}
+
 export default function SectionRenderer({ section }: { section: CmsSection }) {
   return (
     <div id={section.id}>
@@ -18,6 +32,11 @@ export default function SectionRenderer({ section }: { section: CmsSection }) {
         </div>
       )}
       <SectionContent section={section} />
+      {section.type !== "cta" && section.type !== "hero" && (
+        <div className="container mx-auto px-6">
+          <SectionCta data={section.data} />
+        </div>
+      )}
     </div>
   );
 }
