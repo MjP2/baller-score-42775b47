@@ -3,9 +3,9 @@ import { assetUrl } from "@/lib/asset-url";
 import FeatureBlock from "@/components/landing/FeatureBlock";
 import { motion, AnimatePresence } from "framer-motion";
 import { useState } from "react";
-import { Apple, ChevronLeft, ChevronRight, Quote, Smartphone, Target, Volume2 } from "lucide-react";
+import { Apple, ChevronLeft, ChevronRight, Quote, Smartphone, Target, Volume2, Zap } from "lucide-react";
 
-const iconMap = [Smartphone, Target, Volume2];
+const iconMap = [Smartphone, Target, Volume2, Zap];
 
 export default function SectionRenderer({ section }: { section: CmsSection }) {
   return (
@@ -87,7 +87,9 @@ function SectionContent({ section }: { section: CmsSection }) {
         { icon: iconMap[0], title: d.card1Title, body: d.card1Body },
         { icon: iconMap[1], title: d.card2Title, body: d.card2Body },
         { icon: iconMap[2], title: d.card3Title, body: d.card3Body },
+        { icon: iconMap[3], title: d.card4Title, body: d.card4Body },
       ].filter(c => c.title);
+      const gridCols = cards.length === 4 ? "md:grid-cols-2 lg:grid-cols-4" : "md:grid-cols-3";
       return (
         <section className="py-20 lg:py-32">
           <div className="container mx-auto px-6">
@@ -95,7 +97,7 @@ function SectionContent({ section }: { section: CmsSection }) {
               <h2 className="text-3xl sm:text-4xl lg:text-5xl font-display font-bold text-gradient">{d.title}</h2>
               {d.subtitle && <p className="text-lg text-muted-foreground">{d.subtitle}</p>}
             </div>
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-5xl mx-auto">
+            <div className={`grid grid-cols-1 ${gridCols} gap-8 max-w-5xl mx-auto`}>
               {cards.map((card, i) => (
                 <div key={i} className="bg-gradient-card rounded-2xl border border-border p-8 space-y-4 hover:border-primary/30 transition-colors">
                   <div className="w-12 h-12 rounded-xl bg-primary/10 flex items-center justify-center">
