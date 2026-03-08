@@ -6,6 +6,7 @@ export type SectionType =
   | "stats"
   | "platform"
   | "testimonials"
+  | "screenshots"
   | "cta";
 
 export interface CmsSection {
@@ -59,6 +60,7 @@ export const SECTION_LABELS: Record<SectionType, string> = {
   stats: "Stats Bar",
   platform: "Platform Section",
   testimonials: "Testimonials Carousel",
+  screenshots: "Screenshots Gallery",
   cta: "CTA + Footer",
 };
 
@@ -94,6 +96,12 @@ export function defaultDataForType(type: SectionType): Record<string, any> {
         t1Quote: "", t1Author: "", t1Desc: "",
         t2Quote: "", t2Author: "", t2Desc: "",
         t3Quote: "", t3Author: "", t3Desc: "",
+      };
+    case "screenshots":
+      return {
+        title: "", subtitle: "",
+        images: "",
+        columns: 3,
       };
     case "cta":
       return { title: "", subtitle: "", appStoreUrl: "#", playStoreUrl: "#" };
