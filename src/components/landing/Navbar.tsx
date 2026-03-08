@@ -45,9 +45,21 @@ const Navbar = ({ sections = [] }: { sections?: CmsSection[] }) => {
       }`}
     >
       <div className="container mx-auto flex items-center justify-between px-6 py-4">
-        <img src={logo} alt="Baller Score" className="h-8 w-auto" />
+        {/* Mobile: hamburger left */}
+        <button
+          className="md:hidden text-foreground"
+          onClick={() => setMobileOpen(!mobileOpen)}
+        >
+          {mobileOpen ? <X size={24} /> : <Menu size={24} />}
+        </button>
 
-        {/* Desktop */}
+        {/* Desktop: logo left */}
+        <img src={logo} alt="Baller Score" className="hidden md:block h-8 w-auto" />
+
+        {/* Mobile: logo center (absolute) */}
+        <img src={logo} alt="Baller Score" className="md:hidden h-8 w-auto absolute left-1/2 -translate-x-1/2" />
+
+        {/* Desktop nav */}
         <div className="hidden md:flex items-center gap-8">
           {links.map((link) => (
             <button
@@ -68,13 +80,17 @@ const Navbar = ({ sections = [] }: { sections?: CmsSection[] }) => {
           )}
         </div>
 
-        {/* Mobile toggle */}
-        <button
-          className="md:hidden text-foreground"
-          onClick={() => setMobileOpen(!mobileOpen)}
-        >
-          {mobileOpen ? <X size={24} /> : <Menu size={24} />}
-        </button>
+        {/* Mobile: CTA right */}
+        {ctaItem ? (
+          <button
+            className="md:hidden bg-gradient-cta text-primary-foreground px-4 py-1.5 rounded-lg text-xs font-semibold hover:opacity-90 transition-opacity"
+            onClick={() => scrollTo(ctaItem.sectionId)}
+          >
+            {ctaItem.label}
+          </button>
+        ) : (
+          <div className="md:hidden w-6" /> /* spacer for balance */
+        )}
       </div>
 
       {/* Mobile menu */}
