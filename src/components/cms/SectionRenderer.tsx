@@ -3,8 +3,8 @@ import { assetUrl } from "@/lib/asset-url";
 import FeatureBlock from "@/components/landing/FeatureBlock";
 import StoreBadges from "@/components/landing/StoreBadges";
 import { motion, AnimatePresence, useScroll, useTransform } from "framer-motion";
-import { useRef, useState } from "react";
-import { Apple, ChevronLeft, ChevronRight, Quote, Smartphone, Target, Volume2, Zap } from "lucide-react";
+import { useRef, useState, useEffect, useCallback } from "react";
+import { Apple, ChevronLeft, ChevronRight, Quote, Smartphone, Target, Volume2, X, Zap } from "lucide-react";
 import useEmblaCarousel from "embla-carousel-react";
 import { useIsMobile } from "@/hooks/use-mobile";
 
@@ -126,6 +126,8 @@ function SectionContent({ section }: { section: CmsSection }) {
     case "testimonials":
       return <TestimonialsRenderer data={d} />;
 
+    case "screenshots":
+      return <ScreenshotsRenderer data={d} />;
     case "cta":
       return (
         <section className="py-16 lg:py-24">
