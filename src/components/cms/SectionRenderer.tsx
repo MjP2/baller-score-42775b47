@@ -4,6 +4,8 @@ import FeatureBlock from "@/components/landing/FeatureBlock";
 import { motion, AnimatePresence } from "framer-motion";
 import { useState } from "react";
 import { Apple, ChevronLeft, ChevronRight, Quote, Smartphone, Target, Volume2, Zap } from "lucide-react";
+import useEmblaCarousel from "embla-carousel-react";
+import { useIsMobile } from "@/hooks/use-mobile";
 
 const iconMap = [Smartphone, Target, Volume2, Zap];
 
@@ -82,36 +84,9 @@ function SectionContent({ section }: { section: CmsSection }) {
         />
       );
 
-    case "feature-grid": {
-      const cards = [
-        { icon: iconMap[0], title: d.card1Title, body: d.card1Body },
-        { icon: iconMap[1], title: d.card2Title, body: d.card2Body },
-        { icon: iconMap[2], title: d.card3Title, body: d.card3Body },
-        { icon: iconMap[3], title: d.card4Title, body: d.card4Body },
-      ].filter(c => c.title);
-      const gridCols = cards.length === 4 ? "md:grid-cols-2 lg:grid-cols-4" : "md:grid-cols-3";
-      return (
-        <section className="py-20 lg:py-32">
-          <div className="container mx-auto px-6">
-            <div className="text-center mb-16 space-y-4">
-              <h2 className="text-3xl sm:text-4xl lg:text-5xl font-display font-bold text-gradient">{d.title}</h2>
-              {d.subtitle && <p className="text-lg text-muted-foreground">{d.subtitle}</p>}
-            </div>
-            <div className={`grid grid-cols-1 ${gridCols} gap-8 max-w-5xl mx-auto`}>
-              {cards.map((card, i) => (
-                <div key={i} className="bg-gradient-card rounded-2xl border border-border p-8 space-y-4 hover:border-primary/30 transition-colors">
-                  <div className="w-12 h-12 rounded-xl bg-primary/10 flex items-center justify-center">
-                    <card.icon className="w-6 h-6 text-primary" />
-                  </div>
-                  <h3 className="text-xl font-display font-semibold text-foreground">{card.title}</h3>
-                  <p className="text-muted-foreground leading-relaxed text-sm">{card.body}</p>
-                </div>
-              ))}
-            </div>
-          </div>
-        </section>
-      );
-    }
+    case "feature-grid":
+      return <FeatureGridRenderer data={d} />;
+
 
     case "stats": {
       const stats = [
@@ -183,6 +158,60 @@ function SectionContent({ section }: { section: CmsSection }) {
     default:
       return null;
   }
+}
+
+function FeatureGridCard({ card, i }: { card: { icon: any; title: string; body: string }; i: number }) {
+  const Icon = card.icon;
+  return (
+    <div className="bg-gradient-card rounded-2xl border border-border p-8 space-y-4 hover:border-primary/30 transition-colors min-w-0">
+      <div className="w-12 h-12 rounded-xl bg-primary/10 flex items-center justify-center">
+        <Icon className="w-6 h-6 text-primary" />
+      </div>
+      <h3 className="text-xl font-display font-semibold text-foreground">{card.title}</h3>
+      <p className="text-muted-foreground leading-relaxed text-sm">{card.body}</p>
+    </div>
+  );
+}
+
+function FeatureGridRenderer({ data: d }: { data: Record<string, any> }) {
+  const isMobile = useIsMobile();
+  const [emblaRef] = useEmblaCarousel({ align: "start", containScroll: "trimSnaps" });
+  const cards = [
+    { icon: iconMap[0], title: d.card1Title, body: d.card1Body },
+    { icon: iconMap[1], title: d.card2Title, body: d.card2Body },
+    { icon: iconMap[2], title: d.card3Title, body: d.card3Body },
+    { icon: iconMap[3], title: d.card4Title, body: d.card4Body },
+  ].filter(c => c.title);
+  const gridCols = cards.length === 4 ? "md:grid-cols-2 lg:grid-cols-4" : "md:grid-cols-3";
+  const useCarousel = d.mobileCarousel && isMobile;
+
+  return (
+    <section className="py-20 lg:py-32">
+      <div className="container mx-auto px-6">
+        <div className="text-center mb-16 space-y-4">
+          <h2 className="text-3xl sm:text-4xl lg:text-5xl font-display font-bold text-gradient">{d.title}</h2>
+          {d.subtitle && <p className="text-lg text-muted-foreground">{d.subtitle}</p>}
+        </div>
+        {useCarousel ? (
+          <div className="overflow-hidden -mx-6 px-6" ref={emblaRef}>
+            <div className="flex gap-4">
+              {cards.map((card, i) => (
+                <div key={i} className="flex-[0_0_80%] min-w-0">
+                  <FeatureGridCard card={card} i={i} />
+                </div>
+              ))}
+            </div>
+          </div>
+        ) : (
+          <div className={`grid grid-cols-1 ${gridCols} gap-8 max-w-5xl mx-auto`}>
+            {cards.map((card, i) => (
+              <FeatureGridCard key={i} card={card} i={i} />
+            ))}
+          </div>
+        )}
+      </div>
+    </section>
+  );
 }
 
 function TestimonialsRenderer({ data: d }: { data: Record<string, any> }) {
