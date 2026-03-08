@@ -1,4 +1,4 @@
-import { CmsSection } from "./cms";
+import { CmsSection, LangCode, cmsFileName } from "./cms";
 
 const GH_CONFIG_KEY = "baller-cms-github";
 
