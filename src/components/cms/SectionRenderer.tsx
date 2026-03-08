@@ -8,6 +8,7 @@ import { Apple, ChevronLeft, ChevronRight, Quote, Smartphone, Target, Volume2 } 
 const iconMap = [Smartphone, Target, Volume2];
 
 export default function SectionRenderer({ section }: { section: CmsSection }) {
+  // Use section id as anchor for nav scrolling
   const d = section.data;
 
   switch (section.type) {

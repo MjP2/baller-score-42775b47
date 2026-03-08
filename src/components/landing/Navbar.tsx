@@ -1,11 +1,31 @@
 import { useState, useEffect } from "react";
-import { t } from "@/lib/i18n";
 import { Menu, X } from "lucide-react";
 import logo from "@/assets/logo.png";
+import { CmsSection } from "@/lib/cms";
 
-const Navbar = () => {
+interface NavItem {
+  label: string;
+  sectionId: string;
+  isCta: boolean;
+}
+
+function buildNavItems(sections: CmsSection[]): NavItem[] {
+  return sections
+    .filter((s) => s.data._navVisible && s.data._navLabel)
+    .map((s) => ({
+      label: s.data._navLabel,
+      sectionId: s.id,
+      isCta: !!s.data._navCta,
+    }));
+}
+
+const Navbar = ({ sections = [] }: { sections?: CmsSection[] }) => {
   const [scrolled, setScrolled] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
+
+  const navItems = buildNavItems(sections);
+  const links = navItems.filter((n) => !n.isCta);
+  const ctaItem = navItems.find((n) => n.isCta);
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 50);
@@ -17,13 +37,6 @@ const Navbar = () => {
     document.getElementById(id)?.scrollIntoView({ behavior: "smooth" });
     setMobileOpen(false);
   };
-
-  const links = [
-    { label: t("nav.features"), id: "features" },
-    { label: t("nav.dashboard"), id: "dashboard" },
-    { label: t("nav.stats"), id: "stats" },
-    { label: t("nav.testimonials"), id: "testimonials" },
-  ];
 
   return (
     <nav
@@ -38,19 +51,21 @@ const Navbar = () => {
         <div className="hidden md:flex items-center gap-8">
           {links.map((link) => (
             <button
-              key={link.id}
-              onClick={() => scrollTo(link.id)}
+              key={link.sectionId}
+              onClick={() => scrollTo(link.sectionId)}
               className="text-sm font-medium text-foreground/70 hover:text-foreground transition-colors"
             >
               {link.label}
             </button>
           ))}
-          <button
-            onClick={() => scrollTo("cta")}
-            className="bg-gradient-cta text-primary-foreground px-5 py-2 rounded-lg text-sm font-semibold hover:opacity-90 transition-opacity"
-          >
-            {t("nav.download")}
-          </button>
+          {ctaItem && (
+            <button
+              onClick={() => scrollTo(ctaItem.sectionId)}
+              className="bg-gradient-cta text-primary-foreground px-5 py-2 rounded-lg text-sm font-semibold hover:opacity-90 transition-opacity"
+            >
+              {ctaItem.label}
+            </button>
+          )}
         </div>
 
         {/* Mobile toggle */}
@@ -67,19 +82,21 @@ const Navbar = () => {
         <div className="md:hidden bg-background/95 backdrop-blur-md border-t border-border px-6 pb-6 space-y-4">
           {links.map((link) => (
             <button
-              key={link.id}
-              onClick={() => scrollTo(link.id)}
+              key={link.sectionId}
+              onClick={() => scrollTo(link.sectionId)}
               className="block w-full text-left text-foreground/70 hover:text-foreground py-2"
             >
               {link.label}
             </button>
           ))}
-          <button
-            onClick={() => scrollTo("cta")}
-            className="w-full bg-gradient-cta text-primary-foreground px-5 py-2.5 rounded-lg text-sm font-semibold"
-          >
-            {t("nav.download")}
-          </button>
+          {ctaItem && (
+            <button
+              onClick={() => scrollTo(ctaItem.sectionId)}
+              className="w-full bg-gradient-cta text-primary-foreground px-5 py-2.5 rounded-lg text-sm font-semibold"
+            >
+              {ctaItem.label}
+            </button>
+          )}
         </div>
       )}
     </nav>
