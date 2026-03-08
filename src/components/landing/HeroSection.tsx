@@ -5,6 +5,12 @@ import { Apple } from "lucide-react";
 import heroBg from "@/assets/hero-bg.jpg";
 import heroVideo from "@/assets/hero-video.mp4";
 
+const sports = [
+  { key: "hero.sport.padel", color: "bg-primary" },
+  { key: "hero.sport.tennis", color: "bg-team-blue" },
+  { key: "hero.sport.pickleball", color: "bg-team-red" },
+];
+
 const HeroSection = () => {
   const ref = useRef<HTMLDivElement>(null);
   const { scrollYProgress } = useScroll({
@@ -16,7 +22,7 @@ const HeroSection = () => {
 
   return (
     <section ref={ref} className="relative min-h-screen flex items-center overflow-hidden">
-      {/* Parallax background */}
+      {/* Parallax video background */}
       <motion.div className="absolute inset-0 z-0" style={{ y }}>
         <video
           autoPlay
@@ -85,7 +91,49 @@ const HeroSection = () => {
               </div>
             </a>
           </motion.div>
+
+          {/* Sport tags */}
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ duration: 0.7, delay: 0.8 }}
+            className="flex items-center gap-6 pt-2"
+          >
+            {sports.map((sport) => (
+              <span key={sport.key} className="flex items-center gap-2 text-sm text-muted-foreground">
+                <span className={`w-2 h-2 rounded-full ${sport.color}`} />
+                {t(sport.key)}
+              </span>
+            ))}
+          </motion.div>
+
+          {/* Platform labels */}
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ duration: 0.7, delay: 0.9 }}
+            className="flex items-center gap-6"
+          >
+            <span className="text-xs text-muted-foreground/70">{t("hero.platform.ios")}</span>
+            <span className="text-xs text-muted-foreground/70">{t("hero.platform.android")}</span>
+          </motion.div>
         </div>
+      </motion.div>
+
+      {/* Scroll indicator */}
+      <motion.div
+        className="absolute bottom-8 left-1/2 -translate-x-1/2 z-10"
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ delay: 1.2 }}
+      >
+        <motion.div
+          animate={{ y: [0, 8, 0] }}
+          transition={{ repeat: Infinity, duration: 2, ease: "easeInOut" }}
+          className="w-6 h-10 rounded-full border-2 border-muted-foreground/30 flex items-start justify-center pt-2"
+        >
+          <div className="w-1 h-2 rounded-full bg-muted-foreground/50" />
+        </motion.div>
       </motion.div>
     </section>
   );

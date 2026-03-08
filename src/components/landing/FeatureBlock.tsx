@@ -3,13 +3,16 @@ import { motion } from "framer-motion";
 interface FeatureBlockProps {
   id?: string;
   title: string;
+  subtitle?: string;
   body: string;
+  bullets?: string[];
   image: string;
   imageAlt: string;
   reversed?: boolean;
+  badge?: string;
 }
 
-const FeatureBlock = ({ id, title, body, image, imageAlt, reversed = false }: FeatureBlockProps) => {
+const FeatureBlock = ({ id, title, subtitle, body, bullets, image, imageAlt, reversed = false, badge }: FeatureBlockProps) => {
   return (
     <section id={id} className="py-20 lg:py-32">
       <div className="container mx-auto px-6">
@@ -44,10 +47,32 @@ const FeatureBlock = ({ id, title, body, image, imageAlt, reversed = false }: Fe
             viewport={{ once: true, margin: "-100px" }}
             transition={{ duration: 0.7, delay: 0.2 }}
           >
+            {badge && (
+              <span className="inline-flex items-center gap-2 text-xs font-semibold uppercase tracking-wider text-primary">
+                <span className="relative flex h-2 w-2">
+                  <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-primary opacity-75" />
+                  <span className="relative inline-flex rounded-full h-2 w-2 bg-primary" />
+                </span>
+                {badge}
+              </span>
+            )}
             <h2 className="text-3xl sm:text-4xl lg:text-5xl font-display font-bold text-gradient">
               {title}
             </h2>
+            {subtitle && (
+              <p className="text-xl text-foreground/80 font-display">{subtitle}</p>
+            )}
             <p className="text-lg text-muted-foreground leading-relaxed">{body}</p>
+            {bullets && bullets.length > 0 && (
+              <ul className="space-y-3 pt-2">
+                {bullets.map((bullet, i) => (
+                  <li key={i} className="flex items-center gap-3 text-muted-foreground">
+                    <span className="w-1.5 h-1.5 rounded-full bg-primary shrink-0" />
+                    {bullet}
+                  </li>
+                ))}
+              </ul>
+            )}
           </motion.div>
         </div>
       </div>

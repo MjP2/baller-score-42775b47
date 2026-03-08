@@ -19,14 +19,17 @@ const TestimonialsSection = () => {
   return (
     <section id="testimonials" className="py-20 lg:py-32">
       <div className="container mx-auto px-6">
-        <motion.h2
+        <motion.div
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          className="text-3xl sm:text-4xl lg:text-5xl font-display font-bold text-center text-gradient mb-16"
+          className="text-center mb-16 space-y-4"
         >
-          {t("testimonials.title")}
-        </motion.h2>
+          <h2 className="text-3xl sm:text-4xl lg:text-5xl font-display font-bold text-gradient">
+            {t("testimonials.title")}
+          </h2>
+          <p className="text-lg text-muted-foreground">{t("testimonials.subtitle")}</p>
+        </motion.div>
 
         <div className="max-w-3xl mx-auto relative">
           <AnimatePresence mode="wait">
@@ -42,12 +45,19 @@ const TestimonialsSection = () => {
               <p className="text-lg sm:text-xl text-foreground/90 leading-relaxed mb-8 italic">
                 "{t(testimonials[current].quote)}"
               </p>
-              <p className="font-display font-semibold text-foreground">
-                {t(testimonials[current].author)}
-              </p>
-              <p className="text-sm text-muted-foreground">
-                {t(testimonials[current].desc)}
-              </p>
+              <div className="flex items-center justify-center gap-3">
+                <div className="w-10 h-10 rounded-full bg-primary/20 flex items-center justify-center text-primary font-display font-bold text-sm">
+                  {t(testimonials[current].author).charAt(0)}
+                </div>
+                <div className="text-left">
+                  <p className="font-display font-semibold text-foreground">
+                    {t(testimonials[current].author)}
+                  </p>
+                  <p className="text-sm text-muted-foreground">
+                    {t(testimonials[current].desc)}
+                  </p>
+                </div>
+              </div>
             </motion.div>
           </AnimatePresence>
 
