@@ -22,37 +22,7 @@ function SectionContent({ section }: { section: CmsSection }) {
 
   switch (section.type) {
     case "hero":
-      return (
-        <section className="relative min-h-[60vh] flex items-center overflow-hidden">
-          {(d.bgImage || d.videoUrl) && (
-            <div className="absolute inset-0 z-0">
-              {d.videoUrl ? (
-                <video
-                  autoPlay
-                  loop
-                  muted
-                  playsInline
-                  poster={d.bgImage ? assetUrl(d.bgImage) : undefined}
-                  className="w-full h-full object-cover"
-                >
-                  <source src={d.videoUrl} type="video/mp4" />
-                </video>
-              ) : (
-                <img src={assetUrl(d.bgImage)} alt="" className="w-full h-full object-cover" />
-              )}
-              <div className="absolute inset-0 bg-gradient-to-r from-background via-background/80 to-background/30" />
-              <div className="absolute inset-0 bg-gradient-to-t from-background via-transparent to-transparent" />
-            </div>
-          )}
-          <div className="relative z-10 container mx-auto px-6 py-24">
-            <div className="max-w-2xl space-y-6">
-              <h1 className="text-4xl sm:text-5xl lg:text-7xl font-display font-bold leading-tight">
-                <span className="text-gradient">{d.title}</span>
-              </h1>
-              {d.subtitle && <p className="text-lg sm:text-xl text-muted-foreground max-w-lg leading-relaxed">{d.subtitle}</p>}
-            </div>
-          </div>
-        </section>
+      return <HeroRenderer data={d} />;
       );
 
     case "feature-block-side":
