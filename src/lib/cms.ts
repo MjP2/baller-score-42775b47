@@ -77,6 +77,7 @@ export function defaultDataForType(type: SectionType): Record<string, any> {
         card2Title: "", card2Body: "",
         card3Title: "", card3Body: "",
         card4Title: "", card4Body: "",
+        mobileCarousel: false,
       };
     case "stats":
       return {
