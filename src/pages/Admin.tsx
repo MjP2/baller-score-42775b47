@@ -247,6 +247,17 @@ export default function Admin() {
                       </div>
                     )}
                   </div>
+                  {/* Separator toggle */}
+                  {section.type !== "hero" && (
+                    <div className="flex items-center gap-3 pt-2 border-t border-border mt-2">
+                      <Checkbox
+                        id={`sep-${section.id}`}
+                        checked={!!section.data._separator}
+                        onCheckedChange={(v) => updateData(section.id, "_separator", !!v)}
+                      />
+                      <Label htmlFor={`sep-${section.id}`} className="text-sm">Separator line above</Label>
+                    </div>
+                  )}
                   <SectionDataEditor section={section} onUpdate={updateData} />
                 </div>
               )}
