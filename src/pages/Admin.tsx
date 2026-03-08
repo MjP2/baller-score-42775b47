@@ -1,5 +1,5 @@
-import { useState, useEffect } from "react";
-import { CmsSection, SectionType, SECTION_LABELS, loadSections, saveSections, generateId, defaultDataForType } from "@/lib/cms";
+import { useState, useEffect, useRef } from "react";
+import { CmsSection, SectionType, SECTION_LABELS, loadSections, saveSections, generateId, defaultDataForType, SUPPORTED_LANGUAGES, LangCode, exportSectionsJson, importSectionsJson } from "@/lib/cms";
 import SectionRenderer from "@/components/cms/SectionRenderer";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -7,19 +7,30 @@ import { Textarea } from "@/components/ui/textarea";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Switch } from "@/components/ui/switch";
 import { Label } from "@/components/ui/label";
-import { Trash2, GripVertical, ChevronUp, ChevronDown, Plus, Eye, EyeOff } from "lucide-react";
+import { Trash2, GripVertical, ChevronUp, ChevronDown, Plus, Eye, EyeOff, Download, Upload } from "lucide-react";
 import { toast } from "sonner";
 import GitHubPublish from "@/components/cms/GitHubPublish";
 
 const sectionTypes = Object.keys(SECTION_LABELS) as SectionType[];
 
 export default function Admin() {
-  const [sections, setSections] = useState<CmsSection[]>(loadSections);
+  const [lang, setLang] = useState<LangCode>("en");
+  const [sections, setSections] = useState<CmsSection[]>(() => loadSections("en"));
   const [addType, setAddType] = useState<SectionType>("feature-block-side");
   const [previewMode, setPreviewMode] = useState(false);
   const [expandedId, setExpandedId] = useState<string | null>(null);
+  const importRef = useRef<HTMLInputElement>(null);
 
-  useEffect(() => { saveSections(sections); }, [sections]);
+  // Save to localStorage whenever sections or lang change
+  useEffect(() => { saveSections(sections, lang); }, [sections, lang]);
+
+  // Reload sections when language changes
+  const switchLang = (newLang: LangCode) => {
+    saveSections(sections, lang); // save current first
+    setLang(newLang);
+    setSections(loadSections(newLang));
+    setExpandedId(null);
+  };
 
   const addSection = () => {
     const newSection: CmsSection = {
@@ -52,6 +63,36 @@ export default function Admin() {
     });
   };
 
+  const handleExport = () => {
+    const json = exportSectionsJson(sections);
+    const blob = new Blob([json], { type: "application/json" });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement("a");
+    a.href = url;
+    a.download = lang === "en" ? "cms-data.json" : `cms-data-${lang}.json`;
+    a.click();
+    URL.revokeObjectURL(url);
+    toast.success(`Exported ${lang.toUpperCase()} content`);
+  };
+
+  const handleImport = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+    const reader = new FileReader();
+    reader.onload = () => {
+      try {
+        const imported = importSectionsJson(reader.result as string);
+        setSections(imported);
+        toast.success(`Imported ${imported.length} sections into ${lang.toUpperCase()}`);
+      } catch (err: any) {
+        toast.error(`Import failed: ${err.message}`);
+      }
+    };
+    reader.readAsText(file);
+    // Reset input so same file can be re-imported
+    e.target.value = "";
+  };
+
   if (previewMode) {
     return (
       <div className="min-h-screen bg-background text-foreground">
@@ -71,11 +112,38 @@ export default function Admin() {
         <div className="flex items-center justify-between mb-8 flex-wrap gap-4">
           <h1 className="text-3xl font-display font-bold text-gradient">Mini CMS</h1>
           <div className="flex items-center gap-3 flex-wrap">
-            <GitHubPublish sections={sections} />
+            <GitHubPublish sections={sections} lang={lang} />
             <Button onClick={() => setPreviewMode(true)} variant="outline" className="gap-2">
               <Eye size={16} /> Preview
             </Button>
           </div>
+        </div>
+
+        {/* Language selector + import/export */}
+        <div className="flex items-center gap-3 mb-6 flex-wrap">
+          <div className="flex rounded-lg border border-border overflow-hidden">
+            {SUPPORTED_LANGUAGES.map(l => (
+              <button
+                key={l.code}
+                onClick={() => switchLang(l.code)}
+                className={`px-4 py-2 text-sm font-medium transition-colors ${
+                  lang === l.code
+                    ? "bg-primary text-primary-foreground"
+                    : "bg-card text-muted-foreground hover:bg-secondary"
+                }`}
+              >
+                {l.label}
+              </button>
+            ))}
+          </div>
+
+          <Button variant="outline" size="sm" className="gap-2" onClick={handleExport}>
+            <Download size={14} /> Export JSON
+          </Button>
+          <Button variant="outline" size="sm" className="gap-2" onClick={() => importRef.current?.click()}>
+            <Upload size={14} /> Import JSON
+          </Button>
+          <input ref={importRef} type="file" accept=".json" className="hidden" onChange={handleImport} />
         </div>
 
         {/* Section list */}
@@ -118,7 +186,9 @@ export default function Admin() {
 
           {sections.length === 0 && (
             <div className="text-center py-16 text-muted-foreground">
-              No sections yet. Add one below.
+              {lang === "en"
+                ? "No sections yet. Add one below."
+                : "No content for this language yet. Import a translated JSON or add sections."}
             </div>
           )}
         </div>

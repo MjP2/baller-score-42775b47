@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { GitHubConfig, loadGitHubConfig, saveGitHubConfig, clearGitHubConfig, publishToGitHub } from "@/lib/github";
-import { CmsSection } from "@/lib/cms";
+import { CmsSection, LangCode } from "@/lib/cms";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -9,14 +9,15 @@ import { toast } from "sonner";
 
 interface GitHubPublishProps {
   sections: CmsSection[];
+  lang: LangCode;
 }
 
-export default function GitHubPublish({ sections }: GitHubPublishProps) {
+export default function GitHubPublish({ sections, lang }: GitHubPublishProps) {
   const [config, setConfig] = useState<GitHubConfig | null>(loadGitHubConfig);
   const [showSetup, setShowSetup] = useState(false);
   const [publishing, setPublishing] = useState(false);
+  const [commitMsg, setCommitMsg] = useState("");
 
-  // Setup form state
   const [owner, setOwner] = useState(config?.owner || "");
   const [repo, setRepo] = useState(config?.repo || "");
   const [branch, setBranch] = useState(config?.branch || "main");
@@ -50,9 +51,10 @@ export default function GitHubPublish({ sections }: GitHubPublishProps) {
       return;
     }
     setPublishing(true);
-    const result = await publishToGitHub(config, sections);
+    const result = await publishToGitHub(config, sections, commitMsg, lang);
     setPublishing(false);
     if (result.success) {
+      setCommitMsg("");
       toast.success(result.message);
     } else {
       toast.error(result.message);
@@ -109,10 +111,18 @@ export default function GitHubPublish({ sections }: GitHubPublishProps) {
   }
 
   return (
-    <div className="flex items-center gap-3">
+    <div className="flex items-center gap-3 flex-wrap">
+      {config && (
+        <Input
+          value={commitMsg}
+          onChange={e => setCommitMsg(e.target.value)}
+          placeholder="Commit message (optional)"
+          className="w-[220px] h-9 text-sm"
+        />
+      )}
       <Button onClick={handlePublish} disabled={publishing} className="gap-2 bg-gradient-cta hover:opacity-90">
         {publishing ? <Loader2 size={16} className="animate-spin" /> : <Upload size={16} />}
-        {config ? "Publish to GitHub" : "Connect GitHub to Publish"}
+        {config ? `Publish ${lang.toUpperCase()} to GitHub` : "Connect GitHub to Publish"}
       </Button>
       {config && (
         <>
