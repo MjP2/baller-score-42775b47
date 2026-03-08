@@ -14,22 +14,9 @@ export default function SectionRenderer({ section }: { section: CmsSection }) {
     case "hero":
       return (
         <section className="relative min-h-[60vh] flex items-center overflow-hidden">
-          {(d.videoUrl || d.bgImage) && (
+          {d.bgImage && (
             <div className="absolute inset-0 z-0">
-              {d.videoUrl ? (
-                <video
-                  autoPlay
-                  loop
-                  muted
-                  playsInline
-                  poster={d.bgImage ? assetUrl(d.bgImage) : undefined}
-                  className="w-full h-full object-cover"
-                >
-                  <source src={assetUrl(d.videoUrl)} type="video/mp4" />
-                </video>
-              ) : (
-                <img src={assetUrl(d.bgImage)} alt="" className="w-full h-full object-cover" />
-              )}
+              <img src={assetUrl(d.bgImage)} alt="" className="w-full h-full object-cover" />
               <div className="absolute inset-0 bg-gradient-to-r from-background via-background/80 to-background/30" />
               <div className="absolute inset-0 bg-gradient-to-t from-background via-transparent to-transparent" />
             </div>
