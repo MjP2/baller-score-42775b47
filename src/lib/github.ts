@@ -1,4 +1,4 @@
-import { CmsSection } from "./cms";
+import { CmsSection, LangCode, cmsFileName } from "./cms";
 
 const GH_CONFIG_KEY = "baller-cms-github";
 
@@ -26,22 +26,22 @@ export function clearGitHubConfig() {
 }
 
 /**
- * Commits cms-data.json to the configured GitHub repo.
+ * Commits cms-data JSON to the configured GitHub repo.
  * Uses the GitHub Contents API: PUT /repos/{owner}/{repo}/contents/{path}
  */
 export async function publishToGitHub(
   config: GitHubConfig,
   sections: CmsSection[],
-  commitMessage?: string
+  commitMessage?: string,
+  lang: LangCode = "en"
 ): Promise<{ success: boolean; message: string }> {
-  const path = "public/cms-data.json";
+  const path = cmsFileName(lang);
   const content = JSON.stringify(sections, null, 2);
   const encodedContent = btoa(unescape(encodeURIComponent(content)));
 
   const apiUrl = `https://api.github.com/repos/${config.owner}/${config.repo}/contents/${path}`;
 
   try {
-    // First, try to get the existing file to obtain its SHA (needed for updates)
     let sha: string | undefined;
     const getRes = await fetch(`${apiUrl}?ref=${config.branch}`, {
       headers: {
@@ -58,7 +58,7 @@ export async function publishToGitHub(
       return { success: false, message: err.message || `GitHub API error: ${getRes.status}` };
     }
 
-    // PUT to create or update the file
+    const defaultMsg = lang === "en" ? "Update CMS content" : `Update CMS content (${lang})`;
     const putRes = await fetch(apiUrl, {
       method: "PUT",
       headers: {
@@ -67,7 +67,7 @@ export async function publishToGitHub(
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
-        message: commitMessage?.trim() || "Update CMS content",
+        message: commitMessage?.trim() || defaultMsg,
         content: encodedContent,
         branch: config.branch,
         ...(sha ? { sha } : {}),
@@ -75,7 +75,7 @@ export async function publishToGitHub(
     });
 
     if (putRes.ok) {
-      return { success: true, message: "Published successfully! GitHub Pages will rebuild shortly." };
+      return { success: true, message: `Published ${lang.toUpperCase()} successfully! GitHub Pages will rebuild shortly.` };
     }
 
     const err = await putRes.json();

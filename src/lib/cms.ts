@@ -15,18 +15,34 @@ export interface CmsSection {
   data: Record<string, any>;
 }
 
+export const SUPPORTED_LANGUAGES = [
+  { code: "en", label: "English" },
+  { code: "es", label: "Español" },
+  { code: "sv", label: "Svenska" },
+] as const;
+
+export type LangCode = (typeof SUPPORTED_LANGUAGES)[number]["code"];
+
 const STORAGE_KEY = "baller-cms-sections";
 
-export function loadSections(): CmsSection[] {
+function storageKey(lang: LangCode): string {
+  return lang === "en" ? STORAGE_KEY : `${STORAGE_KEY}-${lang}`;
+}
+
+export function cmsFileName(lang: LangCode): string {
+  return lang === "en" ? "public/cms-data.json" : `public/cms-data-${lang}.json`;
+}
+
+export function loadSections(lang: LangCode = "en"): CmsSection[] {
   try {
-    const raw = localStorage.getItem(STORAGE_KEY);
+    const raw = localStorage.getItem(storageKey(lang));
     if (raw) return JSON.parse(raw);
   } catch {}
   return [];
 }
 
-export function saveSections(sections: CmsSection[]) {
-  localStorage.setItem(STORAGE_KEY, JSON.stringify(sections));
+export function saveSections(sections: CmsSection[], lang: LangCode = "en") {
+  localStorage.setItem(storageKey(lang), JSON.stringify(sections));
 }
 
 export function generateId(): string {
@@ -80,4 +96,14 @@ export function defaultDataForType(type: SectionType): Record<string, any> {
     default:
       return {};
   }
+}
+
+export function exportSectionsJson(sections: CmsSection[]): string {
+  return JSON.stringify(sections, null, 2);
+}
+
+export function importSectionsJson(jsonString: string): CmsSection[] {
+  const parsed = JSON.parse(jsonString);
+  if (!Array.isArray(parsed)) throw new Error("Invalid format: expected an array");
+  return parsed;
 }

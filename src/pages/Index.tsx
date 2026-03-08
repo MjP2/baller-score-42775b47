@@ -1,15 +1,26 @@
 import { useState, useEffect } from "react";
-import { CmsSection, loadSections } from "@/lib/cms";
+import { CmsSection, LangCode, loadSections } from "@/lib/cms";
 import SectionRenderer from "@/components/cms/SectionRenderer";
 import Navbar from "@/components/landing/Navbar";
+
+function detectLanguage(): LangCode {
+  const params = new URLSearchParams(window.location.search);
+  const langParam = params.get("lang");
+  if (langParam === "es" || langParam === "sv") return langParam;
+  const browserLang = navigator.language?.slice(0, 2);
+  if (browserLang === "es" || browserLang === "sv") return browserLang;
+  return "en";
+}
 
 const Index = () => {
   const [sections, setSections] = useState<CmsSection[]>([]);
   const [loading, setLoading] = useState(true);
+  const lang = detectLanguage();
 
   useEffect(() => {
-    // Try fetching published cms-data.json first, fall back to localStorage
-    fetch(`${import.meta.env.BASE_URL}cms-data.json`)
+    const fileName = lang === "en" ? "cms-data.json" : `cms-data-${lang}.json`;
+
+    fetch(`${import.meta.env.BASE_URL}${fileName}`)
       .then(res => {
         if (!res.ok) throw new Error("Not found");
         return res.json();
@@ -19,11 +30,18 @@ const Index = () => {
         setLoading(false);
       })
       .catch(() => {
-        // Fallback to localStorage
-        setSections(loadSections());
-        setLoading(false);
+        // Try English fallback if localized file doesn't exist
+        if (lang !== "en") {
+          fetch(`${import.meta.env.BASE_URL}cms-data.json`)
+            .then(res => res.ok ? res.json() : Promise.reject())
+            .then((data: CmsSection[]) => { setSections(data); setLoading(false); })
+            .catch(() => { setSections(loadSections(lang)); setLoading(false); });
+        } else {
+          setSections(loadSections("en"));
+          setLoading(false);
+        }
       });
-  }, []);
+  }, [lang]);
 
   if (loading) {
     return (
