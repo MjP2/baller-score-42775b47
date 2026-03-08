@@ -121,52 +121,10 @@
       "title": "Ready to Elevate Your Game?",
       "subtitle": "Download Baller Score now and never lose track of a point again.",
       "appStoreUrl": "#",
-      "playStoreUrl": "#"
-    }
-  },
-  {
-    "id": "znpgzqv1",
-    "type": "feature-block-side",
-    "order": 9,
-    "data": {
-      "title": "",
-      "subtitle": "",
-      "body": "",
-      "image": "",
-      "imageAlt": "",
-      "reversed": false,
-      "badge": "",
-      "bullets": ""
-    }
-  },
-  {
-    "id": "2p7ipt31",
-    "type": "stats",
-    "order": 10,
-    "data": {
-      "stat1Value": "",
-      "stat1Label": "",
-      "stat2Value": "",
-      "stat2Label": "",
-      "stat3Value": "",
-      "stat3Label": "",
-      "stat4Value": "",
-      "stat4Label": ""
-    }
-  },
-  {
-    "id": "d7k20i52",
-    "type": "stats",
-    "order": 11,
-    "data": {
-      "stat1Value": "",
-      "stat1Label": "",
-      "stat2Value": "",
-      "stat2Label": "",
-      "stat3Value": "",
-      "stat3Label": "",
-      "stat4Value": "",
-      "stat4Label": ""
+      "playStoreUrl": "#",
+      "_navVisible": true,
+      "_navCta": true,
+      "_navLabel": "Get the app"
     }
   }
 ]
