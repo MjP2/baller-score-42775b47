@@ -93,7 +93,28 @@ export default function Admin() {
     e.target.value = "";
   };
 
-  if (previewMode) {
+  const handleCopyFromEnglish = () => {
+    const enSections = loadSections("en");
+    if (enSections.length === 0) {
+      toast.error("No English content to copy");
+      return;
+    }
+    setSections(enSections.map(s => ({ ...s })));
+    toast.success(`Copied all ${enSections.length} sections from English into ${lang.toUpperCase()}`);
+  };
+
+  const handleSyncNewSections = () => {
+    const enSections = loadSections("en");
+    const existingIds = new Set(sections.map(s => s.id));
+    const newSections = enSections.filter(s => !existingIds.has(s.id));
+    if (newSections.length === 0) {
+      toast.info("No new sections to sync — all English sections already exist here");
+      return;
+    }
+    setSections(prev => [...prev, ...newSections].map((s, i) => ({ ...s, order: i })));
+    toast.success(`Synced ${newSections.length} new section(s) from English`);
+  };
+
     return (
       <div className="min-h-screen bg-background text-foreground">
         <div className="fixed top-4 right-4 z-50">
