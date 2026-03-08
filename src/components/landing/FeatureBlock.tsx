@@ -1,3 +1,4 @@
+import { useEffect, useState } from "react";
 import { motion } from "framer-motion";
 
 interface FeatureBlockProps {
@@ -14,6 +15,19 @@ interface FeatureBlockProps {
 }
 
 const FeatureBlock = ({ id, title, subtitle, body, bullets, image, imageAlt, reversed = false, badge, layout = "side-by-side" }: FeatureBlockProps) => {
+  const [imageLoaded, setImageLoaded] = useState(false);
+
+  useEffect(() => {
+    if (!image) return;
+    const img = new Image();
+    img.src = image;
+    if (img.complete) {
+      setImageLoaded(true);
+    } else {
+      img.onload = () => setImageLoaded(true);
+    }
+  }, [image]);
+
   if (layout === "stacked") {
     return (
       <section id={id} className="py-20 lg:py-32">
