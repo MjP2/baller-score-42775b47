@@ -162,6 +162,8 @@ function HeroRenderer({ data: d }: { data: Record<string, any> }) {
           {d.subtitle && <p className="text-lg sm:text-xl text-muted-foreground max-w-lg leading-relaxed">{d.subtitle}</p>}
         </div>
       </motion.div>
+      {/* Feather mask at bottom edge */}
+      <div className="absolute bottom-0 left-0 right-0 z-20 h-24 bg-gradient-to-t from-background to-transparent pointer-events-none" />
     </section>
   );
 }
