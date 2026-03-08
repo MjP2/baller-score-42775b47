@@ -31,7 +31,8 @@ export function clearGitHubConfig() {
  */
 export async function publishToGitHub(
   config: GitHubConfig,
-  sections: CmsSection[]
+  sections: CmsSection[],
+  commitMessage?: string
 ): Promise<{ success: boolean; message: string }> {
   const path = "public/cms-data.json";
   const content = JSON.stringify(sections, null, 2);
@@ -66,7 +67,7 @@ export async function publishToGitHub(
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
-        message: "Update CMS content",
+        message: commitMessage?.trim() || "Update CMS content",
         content: encodedContent,
         branch: config.branch,
         ...(sha ? { sha } : {}),
