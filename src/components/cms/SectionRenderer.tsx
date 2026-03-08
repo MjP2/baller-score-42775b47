@@ -1,4 +1,5 @@
 import { CmsSection } from "@/lib/cms";
+import { assetUrl } from "@/lib/asset-url";
 import FeatureBlock from "@/components/landing/FeatureBlock";
 import { motion, AnimatePresence } from "framer-motion";
 import { useState } from "react";
@@ -15,7 +16,7 @@ export default function SectionRenderer({ section }: { section: CmsSection }) {
         <section className="relative min-h-[60vh] flex items-center overflow-hidden">
           {d.bgImage && (
             <div className="absolute inset-0 z-0">
-              <img src={d.bgImage} alt="" className="w-full h-full object-cover" />
+              <img src={assetUrl(d.bgImage)} alt="" className="w-full h-full object-cover" />
               <div className="absolute inset-0 bg-gradient-to-r from-background via-background/80 to-background/30" />
               <div className="absolute inset-0 bg-gradient-to-t from-background via-transparent to-transparent" />
             </div>
@@ -37,7 +38,7 @@ export default function SectionRenderer({ section }: { section: CmsSection }) {
           title={d.title}
           subtitle={d.subtitle}
           body={d.body}
-          image={d.image}
+          image={assetUrl(d.image)}
           imageAlt={d.imageAlt || ""}
           reversed={d.reversed}
           badge={d.badge}
@@ -52,7 +53,7 @@ export default function SectionRenderer({ section }: { section: CmsSection }) {
           title={d.title}
           subtitle={d.subtitle}
           body={d.body}
-          image={d.image}
+          image={assetUrl(d.image)}
           imageAlt={d.imageAlt || ""}
           badge={d.badge}
           bullets={d.bullets ? d.bullets.split("\n").filter(Boolean) : undefined}
@@ -122,7 +123,7 @@ export default function SectionRenderer({ section }: { section: CmsSection }) {
             </div>
             {d.image && (
               <div className="max-w-5xl mx-auto">
-                <img src={d.image} alt={d.title} className="w-full rounded-2xl shadow-card" loading="lazy" />
+                <img src={assetUrl(d.image)} alt={d.title} className="w-full rounded-2xl shadow-card" loading="lazy" />
               </div>
             )}
           </div>
