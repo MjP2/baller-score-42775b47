@@ -7,7 +7,7 @@ import { Textarea } from "@/components/ui/textarea";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Switch } from "@/components/ui/switch";
 import { Label } from "@/components/ui/label";
-import { Trash2, GripVertical, ChevronUp, ChevronDown, Plus, Eye, EyeOff, Download, Upload } from "lucide-react";
+import { Trash2, GripVertical, ChevronUp, ChevronDown, Plus, Eye, EyeOff, Download, Upload, Copy, GitMerge } from "lucide-react";
 import { toast } from "sonner";
 import GitHubPublish from "@/components/cms/GitHubPublish";
 
@@ -93,6 +93,28 @@ export default function Admin() {
     e.target.value = "";
   };
 
+  const handleCopyFromEnglish = () => {
+    const enSections = loadSections("en");
+    if (enSections.length === 0) {
+      toast.error("No English content to copy");
+      return;
+    }
+    setSections(enSections.map(s => ({ ...s })));
+    toast.success(`Copied all ${enSections.length} sections from English into ${lang.toUpperCase()}`);
+  };
+
+  const handleSyncNewSections = () => {
+    const enSections = loadSections("en");
+    const existingIds = new Set(sections.map(s => s.id));
+    const newSections = enSections.filter(s => !existingIds.has(s.id));
+    if (newSections.length === 0) {
+      toast.info("No new sections to sync — all English sections already exist here");
+      return;
+    }
+    setSections(prev => [...prev, ...newSections].map((s, i) => ({ ...s, order: i })));
+    toast.success(`Synced ${newSections.length} new section(s) from English`);
+  };
+
   if (previewMode) {
     return (
       <div className="min-h-screen bg-background text-foreground">
@@ -144,6 +166,16 @@ export default function Admin() {
             <Upload size={14} /> Import JSON
           </Button>
           <input ref={importRef} type="file" accept=".json" className="hidden" onChange={handleImport} />
+          {lang !== "en" && (
+            <>
+              <Button variant="outline" size="sm" className="gap-2" onClick={handleCopyFromEnglish}>
+                <Copy size={14} /> Copy All from English
+              </Button>
+              <Button variant="outline" size="sm" className="gap-2" onClick={handleSyncNewSections}>
+                <GitMerge size={14} /> Sync New Sections
+              </Button>
+            </>
+          )}
         </div>
 
         {/* Section list */}
