@@ -107,8 +107,8 @@ function SectionContent({ section }: { section: CmsSection }) {
 
     case "platform":
       return (
-        <section className="py-20 lg:py-32">
-          <div className="container mx-auto px-6 text-center space-y-12">
+        <section className="py-16 lg:py-24">
+          <div className="container mx-auto px-6 text-center space-y-8">
             <div className="space-y-4">
               <h2 className="text-4xl sm:text-5xl lg:text-6xl font-display font-bold text-gradient">{d.title}</h2>
               {d.subtitle && <p className="text-lg text-muted-foreground">{d.subtitle}</p>}
@@ -127,9 +127,9 @@ function SectionContent({ section }: { section: CmsSection }) {
 
     case "cta":
       return (
-        <section className="py-20 lg:py-32">
+        <section className="py-16 lg:py-24">
           <div className="container mx-auto px-6">
-            <div className="max-w-3xl mx-auto text-center space-y-8">
+            <div className="max-w-3xl mx-auto text-center space-y-6">
               <h2 className="text-4xl sm:text-5xl lg:text-6xl font-display font-bold text-gradient">{d.title}</h2>
               {d.subtitle && <p className="text-lg text-muted-foreground">{d.subtitle}</p>}
               <div className="flex justify-center pt-4">
