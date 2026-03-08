@@ -65,7 +65,7 @@ export const SECTION_LABELS: Record<SectionType, string> = {
 export function defaultDataForType(type: SectionType): Record<string, any> {
   switch (type) {
     case "hero":
-      return { title: "", subtitle: "", videoUrl: "", bgImage: "" };
+      return { title: "", subtitle: "", videoUrl: "", bgImage: "", appStoreUrl: "", playStoreUrl: "" };
     case "feature-block-side":
       return { title: "", subtitle: "", body: "", image: "", imageAlt: "", reversed: false, badge: "", bullets: "" };
     case "feature-block-stacked":

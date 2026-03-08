@@ -1,6 +1,7 @@
 import { CmsSection } from "@/lib/cms";
 import { assetUrl } from "@/lib/asset-url";
 import FeatureBlock from "@/components/landing/FeatureBlock";
+import StoreBadges from "@/components/landing/StoreBadges";
 import { motion, AnimatePresence, useScroll, useTransform } from "framer-motion";
 import { useRef, useState } from "react";
 import { Apple, ChevronLeft, ChevronRight, Quote, Smartphone, Target, Volume2, Zap } from "lucide-react";
@@ -131,17 +132,8 @@ function SectionContent({ section }: { section: CmsSection }) {
             <div className="max-w-3xl mx-auto text-center space-y-8">
               <h2 className="text-4xl sm:text-5xl lg:text-6xl font-display font-bold text-gradient">{d.title}</h2>
               {d.subtitle && <p className="text-lg text-muted-foreground">{d.subtitle}</p>}
-              <div className="flex flex-col sm:flex-row gap-4 justify-center items-center pt-4">
-                {d.appStoreUrl && (
-                  <a href={d.appStoreUrl} target="_blank" rel="noopener noreferrer" className="hover:opacity-80 transition-opacity">
-                    <img src={`${import.meta.env.BASE_URL}assets/badge-appstore.svg`} alt="Download on the App Store" className="h-[40px] w-auto" />
-                  </a>
-                )}
-                {d.playStoreUrl && (
-                  <a href={d.playStoreUrl} target="_blank" rel="noopener noreferrer" className="hover:opacity-80 transition-opacity">
-                    <img src={`${import.meta.env.BASE_URL}assets/badge-googleplay.png`} alt="Get it on Google Play" className="h-[60px] w-auto -my-[10px]" />
-                  </a>
-                )}
+              <div className="flex justify-center pt-4">
+                <StoreBadges appStoreUrl={d.appStoreUrl} playStoreUrl={d.playStoreUrl} />
               </div>
             </div>
           </div>
@@ -184,6 +176,7 @@ function HeroRenderer({ data: d }: { data: Record<string, any> }) {
             <span className="text-gradient">{d.title}</span>
           </h1>
           {d.subtitle && <p className="text-lg sm:text-xl text-muted-foreground max-w-lg leading-relaxed">{d.subtitle}</p>}
+          <StoreBadges appStoreUrl={d.appStoreUrl} playStoreUrl={d.playStoreUrl} />
         </div>
       </motion.div>
       {/* Feather mask at bottom edge */}
