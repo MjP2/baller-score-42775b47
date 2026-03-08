@@ -32,6 +32,11 @@ export default function SectionRenderer({ section }: { section: CmsSection }) {
         </div>
       )}
       <SectionContent section={section} />
+      {section.type !== "cta" && section.type !== "hero" && (
+        <div className="container mx-auto px-6">
+          <SectionCta data={section.data} />
+        </div>
+      )}
     </div>
   );
 }

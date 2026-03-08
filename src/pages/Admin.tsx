@@ -258,6 +258,35 @@ export default function Admin() {
                       <Label htmlFor={`sep-${section.id}`} className="text-sm">Separator line above</Label>
                     </div>
                   )}
+                  {/* Section CTA */}
+                  {section.type !== "hero" && section.type !== "cta" && (
+                    <div className="space-y-3 pt-2 border-t border-border mt-2">
+                      <div className="flex items-center gap-3">
+                        <Checkbox
+                          id={`cta-${section.id}`}
+                          checked={!!section.data._ctaEnabled}
+                          onCheckedChange={(v) => updateData(section.id, "_ctaEnabled", !!v)}
+                        />
+                        <Label htmlFor={`cta-${section.id}`} className="text-sm">Show CTA button</Label>
+                      </div>
+                      {section.data._ctaEnabled && (
+                        <div className="pl-7 space-y-2">
+                          <Input
+                            value={section.data._ctaText || ""}
+                            onChange={(e) => updateData(section.id, "_ctaText", e.target.value)}
+                            placeholder="Button text"
+                            className="h-8 text-sm"
+                          />
+                          <Input
+                            value={section.data._ctaUrl || ""}
+                            onChange={(e) => updateData(section.id, "_ctaUrl", e.target.value)}
+                            placeholder="Button URL"
+                            className="h-8 text-sm"
+                          />
+                        </div>
+                      )}
+                    </div>
+                  )}
                   <SectionDataEditor section={section} onUpdate={updateData} />
                 </div>
               )}
