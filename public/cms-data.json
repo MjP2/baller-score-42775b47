@@ -67,7 +67,9 @@
       "imageAlt": "Post-match statistics on phone",
       "reversed": false,
       "badge": "",
-      "bullets": ""
+      "bullets": "",
+      "_navVisible": true,
+      "_navLabel": "Analytics"
     }
   },
   {
