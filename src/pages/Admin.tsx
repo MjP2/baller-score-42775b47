@@ -166,6 +166,16 @@ export default function Admin() {
             <Upload size={14} /> Import JSON
           </Button>
           <input ref={importRef} type="file" accept=".json" className="hidden" onChange={handleImport} />
+          {lang !== "en" && (
+            <>
+              <Button variant="outline" size="sm" className="gap-2" onClick={handleCopyFromEnglish}>
+                <Copy size={14} /> Copy All from English
+              </Button>
+              <Button variant="outline" size="sm" className="gap-2" onClick={handleSyncNewSections}>
+                <GitMerge size={14} /> Sync New Sections
+              </Button>
+            </>
+          )}
         </div>
 
         {/* Section list */}
