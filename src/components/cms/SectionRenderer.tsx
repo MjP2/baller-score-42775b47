@@ -12,6 +12,11 @@ const iconMap = [Smartphone, Target, Volume2, Zap];
 export default function SectionRenderer({ section }: { section: CmsSection }) {
   return (
     <div id={section.id}>
+      {section.data._separator && (
+        <div className="container mx-auto px-6">
+          <hr className="border-t border-border" />
+        </div>
+      )}
       <SectionContent section={section} />
     </div>
   );
