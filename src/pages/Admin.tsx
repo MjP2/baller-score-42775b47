@@ -166,7 +166,7 @@ function SectionDataEditor({ section, onUpdate }: { section: CmsSection; onUpdat
 
   switch (section.type) {
     case "hero":
-      return <>{field("title", "Title")}{field("subtitle", "Subtitle", true)}{field("bgImage", "Background Image URL")}</>;
+      return <>{field("title", "Title")}{field("subtitle", "Subtitle", true)}{field("videoUrl", "Video URL (MP4)")}{field("bgImage", "Background/Poster Image URL")}</>;
     case "feature-block-side":
       return <>{field("title", "Title")}{field("subtitle", "Subtitle")}{field("body", "Body Text", true)}{field("image", "Image URL")}{field("imageAlt", "Image Alt Text")}{field("badge", "Badge Text")}{field("bullets", "Bullets (one per line)", true)}{toggle("reversed", "Reversed (image right)")}</>;
     case "feature-block-stacked":
