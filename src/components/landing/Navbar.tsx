@@ -1,5 +1,4 @@
 import { useState, useEffect } from "react";
-import { Menu, X } from "lucide-react";
 import logo from "@/assets/logo.png";
 import { CmsSection } from "@/lib/cms";
 
@@ -21,7 +20,6 @@ function buildNavItems(sections: CmsSection[]): NavItem[] {
 
 const Navbar = ({ sections = [] }: { sections?: CmsSection[] }) => {
   const [scrolled, setScrolled] = useState(false);
-  const [mobileOpen, setMobileOpen] = useState(false);
 
   const navItems = buildNavItems(sections);
   const links = navItems.filter((n) => !n.isCta);
@@ -35,7 +33,6 @@ const Navbar = ({ sections = [] }: { sections?: CmsSection[] }) => {
 
   const scrollTo = (id: string) => {
     document.getElementById(id)?.scrollIntoView({ behavior: "smooth" });
-    setMobileOpen(false);
   };
 
   return (
@@ -45,19 +42,8 @@ const Navbar = ({ sections = [] }: { sections?: CmsSection[] }) => {
       }`}
     >
       <div className="container mx-auto flex items-center justify-between px-6 py-4">
-        {/* Mobile: hamburger left */}
-        <button
-          className="md:hidden text-foreground"
-          onClick={() => setMobileOpen(!mobileOpen)}
-        >
-          {mobileOpen ? <X size={24} /> : <Menu size={24} />}
-        </button>
-
-        {/* Desktop: logo left */}
-        <img src={logo} alt="Baller Score" className="hidden md:block h-8 w-auto" />
-
-        {/* Mobile: logo center (absolute) */}
-        <img src={logo} alt="Baller Score" className="md:hidden h-8 w-auto absolute left-1/2 -translate-x-1/2" />
+        {/* Logo — always left */}
+        <img src={logo} alt="Baller Score" className="h-8 w-auto" />
 
         {/* Desktop nav */}
         <div className="hidden md:flex items-center gap-8">
@@ -80,41 +66,16 @@ const Navbar = ({ sections = [] }: { sections?: CmsSection[] }) => {
           )}
         </div>
 
-        {/* Mobile: CTA right */}
-        {ctaItem ? (
+        {/* Mobile: CTA only, no menu */}
+        {ctaItem && (
           <button
-            className="md:hidden bg-gradient-cta text-primary-foreground px-4 py-1.5 rounded-lg text-xs font-semibold hover:opacity-90 transition-opacity"
+            className="md:hidden bg-gradient-cta text-primary-foreground px-5 py-2 rounded-lg text-sm font-semibold hover:opacity-90 transition-opacity"
             onClick={() => scrollTo(ctaItem.sectionId)}
           >
             {ctaItem.label}
           </button>
-        ) : (
-          <div className="md:hidden w-6" /> /* spacer for balance */
         )}
       </div>
-
-      {/* Mobile menu */}
-      {mobileOpen && (
-        <div className="md:hidden bg-background/95 backdrop-blur-md border-t border-border px-6 pb-6 space-y-4">
-          {links.map((link) => (
-            <button
-              key={link.sectionId}
-              onClick={() => scrollTo(link.sectionId)}
-              className="block w-full text-left text-foreground/70 hover:text-foreground py-2"
-            >
-              {link.label}
-            </button>
-          ))}
-          {ctaItem && (
-            <button
-              onClick={() => scrollTo(ctaItem.sectionId)}
-              className="w-full bg-gradient-cta text-primary-foreground px-5 py-2.5 rounded-lg text-sm font-semibold"
-            >
-              {ctaItem.label}
-            </button>
-          )}
-        </div>
-      )}
     </nav>
   );
 };
