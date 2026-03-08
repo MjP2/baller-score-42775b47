@@ -43,7 +43,7 @@ export async function publishToGitHub(
 
   try {
     let sha: string | undefined;
-    const getRes = await fetch(`${apiUrl}?ref=${config.branch}`, {
+    const getRes = await fetch(`${apiUrl}?ref=${config.branch}&_t=${Date.now()}`, {
       headers: {
         Authorization: `Bearer ${config.token}`,
         Accept: "application/vnd.github.v3+json",
